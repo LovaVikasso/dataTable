@@ -44,7 +44,7 @@ export const Empty = ({className}: ComponentProps<'div'>) => {
 
     return (
         <div className={classNames.empty}>
-            <h4> You see an empty table, there is no data yet</h4>
+            <h4>Данных в таблице пока нет</h4>
         </div>
     )
 }

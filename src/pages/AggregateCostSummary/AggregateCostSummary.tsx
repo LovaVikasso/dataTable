@@ -86,6 +86,7 @@ export const AggregateCostSummary = () => {
                             averagePrice,
                             expenses
                         } = item;
+                        if (!item || !internationalName || !tradeNames) return null;
                         return (
                             <Table.Row key={index}>
                                 <Table.Data>{internationalName}</Table.Data>

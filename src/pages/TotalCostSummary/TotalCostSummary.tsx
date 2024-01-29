@@ -41,7 +41,9 @@ export const TotalCostSummary = () => {
                     </Table.Head>
                     <Table.Body>
                         {data.map((item, index) => {
+                            if (!item || !item.internationalName || !item.tradeName) return null;
                             const {internationalName, tradeName, releaseForm, quantity, price, expenses} = item
+                            if (!item || !internationalName || !tradeName) return null;
                             return (<Table.Row key={index}>
                                 <Table.Data>{internationalName}</Table.Data>
                                 <Table.Data>{tradeName}</Table.Data>
