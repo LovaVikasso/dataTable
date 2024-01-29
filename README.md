@@ -14,10 +14,10 @@
  - Storybook
 
 # Запустить проект 
-git clone https://github.com/LovaVikasso/dataTable
-cd your-repository-name
-npm install
-npm start
+1. git clone https://github.com/LovaVikasso/dataTable
+2. cd your-repository-name
+3. npm install
+4. npm start
 
 # Deploy
 - 🚀 [vercel](https://data-table-test.vercel.app/): Просто перейди по ссылке
