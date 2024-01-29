@@ -1,6 +1,6 @@
 import { ComponentPropsWithoutRef, ElementRef, forwardRef } from 'react';
 
-import s from './button.module.scss';
+import s from './Button.module.scss';
 
 type DefaultButtonProps = ComponentPropsWithoutRef<'button'>;
 
