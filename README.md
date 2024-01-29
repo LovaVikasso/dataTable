@@ -1,31 +1,28 @@
 # React + TypeScript + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Тестовое задание по отображению данных типа .xlxs в таблице
 
-Currently, two official plugins are available:
+## Технологии:
+ - pnpm
+ - React
+ - TypeScript
+ - Redux
+ - SCSS
+ - Vite
+ - XLSX (Sheet.js)
+ - React Router DOM
+ - Storybook
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+# Запустить проект 
+git clone https://github.com/LovaVikasso/dataTable
+cd your-repository-name
+npm install
+npm start
 
-## Expanding the ESLint configuration
+# Deploy
+- 🚀 [vercel](https://data-table-test.vercel.app/): Просто перейди по ссылке
+- 🌐 [github](https://github.com/LovaVikasso/dataTable): Ссылка на репозиторий проекта
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
-
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
-# dataTable
+# Функциональность
+- Первая страница - сводная таблица, можно очистить и загрузить другую таблицу аналогичную по формату 
+- Вторая страница - та же стаблица с агрегированными значениями, с показателями сгруппироваными по МНН значению
