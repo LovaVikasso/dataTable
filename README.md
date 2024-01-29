@@ -18,6 +18,7 @@
 2. cd your-repository-name
 3. npm install
 4. npm start
+5. npm run storybook - for storybook
 
 # Deploy
 - 🚀 [vercel](https://data-table-test.vercel.app/): Просто перейди по ссылке
