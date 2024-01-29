@@ -1,5 +1,5 @@
 import {ComponentProps, FC} from 'react'
-import s from './table.module.scss'
+import s from './Table.module.scss'
 
 //Везде будет одинаковая структура ComponentProps<'table tag'>,
 //все кастомные компоненты таблицы будут принимать такие же props как и теги table
