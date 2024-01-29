@@ -12,10 +12,10 @@ export const Header = () => {
     return (
         <div className={s.header}>
             <NavLink to={'/'}>
-                <Button variant={getButtonVariant('/')}>Total count</Button>
+                <Button variant={getButtonVariant('/')}>Сводная таблица</Button>
             </NavLink>
             <NavLink to={'/aggregate'}>
-                <Button variant={getButtonVariant('/aggregate')}>Aggregate</Button>
+                <Button variant={getButtonVariant('/aggregate')}>Агрегированная таблица</Button>
             </NavLink>
         </div>
     )

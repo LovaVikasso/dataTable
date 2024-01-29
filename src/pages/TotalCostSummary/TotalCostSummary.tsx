@@ -21,12 +21,13 @@ export const TotalCostSummary = () => {
         dispatch(loadData(uploadedData));
     };
     const handleClearData = () => dispatch(clearData())
+
     //проверка на то чтобы таблица не была пустая, даже если есть названия столбцов
     const isDataEmpty = !data || data.length === 0 || data.every(item => item.quantity === 0 && item.price === 0);
 
     return (
         <div className={s.container}>
-            <h3>Total cost summary</h3>
+            <h3>Сводная таблица затрат</h3>
 
             {!isDataEmpty ? (
                 <Table.Root>

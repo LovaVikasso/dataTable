@@ -27,6 +27,7 @@ export const AggregateCostSummary = () => {
             releaseForms: Set<string>;
             totalQuantity: number;
             totalPrice: number;
+            totalExpenses: number
         }> = {};
 
         data.forEach(item => {
@@ -39,13 +40,14 @@ export const AggregateCostSummary = () => {
                     releaseForms: new Set(),
                     totalQuantity: 0,
                     totalPrice: 0,
+                    totalExpenses: 0
                 };
             }
 
             aggregation[internationalName].tradeNames.add(tradeName);
             aggregation[internationalName].releaseForms.add(releaseForm);
             aggregation[internationalName].totalQuantity += quantity;
-            aggregation[internationalName].totalPrice += price * quantity;
+            aggregation[internationalName].totalExpenses += price * quantity;
         });
 
         return Object.values(aggregation).map(item => ({
@@ -53,18 +55,18 @@ export const AggregateCostSummary = () => {
             tradeNames: Array.from(item.tradeNames).join('\n'),
             releaseForms: Array.from(item.releaseForms).join('\n'),
             totalQuantity: item.totalQuantity,
-            averagePrice: item.totalQuantity > 0 ? item.totalPrice / item.totalQuantity : 0,
-            expenses: item.totalQuantity * (item.totalPrice / (item.totalQuantity > 0 ? item.totalQuantity : 1))
+            averagePrice: item.totalQuantity > 0 ? +(item.totalExpenses / item.totalQuantity).toFixed(2) : 0,
+            expenses: item.totalExpenses
         }));
     };
 
     const aggregatedData = aggregateData(data);
-    const totalOverallQuantity = aggregatedData.reduce((acc, item) => acc + item.totalQuantity, 0);
-    const totalExpenses = aggregatedData.reduce((acc, item) => acc + item.expenses, 0);
-    const averageQuantity = totalOverallQuantity / aggregatedData.length;
+
+    const totalOverallQuantity = aggregatedData.reduce((acc, item) => acc + item.totalQuantity, 0)
+    const totalExpenses = aggregatedData.reduce((sum, item) =>  sum + item.expenses, 0);
     return (
         <div className={s.container}>
-            <h3>Aggregate Cost Summary</h3>
+            <h3>Агрегированная таблица затрат</h3>
             {!isDataEmpty ? <Table.Root>
                 <Table.Head>
                     <Table.Row>
@@ -100,7 +102,7 @@ export const AggregateCostSummary = () => {
                         <Table.Data></Table.Data>
                         <Table.Data>Итого:</Table.Data>
                         <Table.Data>{formatQuantity(totalOverallQuantity)}</Table.Data>
-                        <Table.Data>{formatNumber(averageQuantity || 0)}</Table.Data>
+                        <Table.Data></Table.Data>
                         <Table.Data>{formatNumber(totalExpenses)}</Table.Data>
                     </Table.Row>
                 </Table.Body>

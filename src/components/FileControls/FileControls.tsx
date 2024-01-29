@@ -10,7 +10,7 @@ export const FileControls = ({load, clear}: Props) => {
     return (
         <div className={s.container}>
             <FileUploader onFileUploaded={load}/>
-            <Button onClick={clear}>Clear data</Button>
+            <Button onClick={clear}>Очистить таблицу</Button>
         </div>
     )
 }

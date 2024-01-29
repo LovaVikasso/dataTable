@@ -32,7 +32,7 @@ export const FileUploader = ({onFileUploaded}: Props) => {
                    multiple={false} // только 1 файл
                    style={{display: 'none'}} // скрыть инпут
             />
-            <Button onClick={handleButtonClick}>Upload File</Button>
+            <Button onClick={handleButtonClick}>Загрузить файл</Button>
         </>
     );
 }

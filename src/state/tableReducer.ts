@@ -1,4 +1,5 @@
-import {Product, TableWithHeaders} from "../common/types.ts";
+import {TableWithHeaders} from "../common/types.ts";
+import {initialTable} from "../common/initialTable.ts";
 
 export const LOAD_DATA = 'LOAD_DATA';
 export const CLEAR_DATA = 'CLEAR_DATA';
@@ -11,12 +12,7 @@ type ClearDataAction = {
     type: typeof CLEAR_DATA;
 }
 
-const initialState = {
-    headers: [] as string[],
-    data: [] as Product[],
-    totalQuantity: 0 as number,
-    totalExpenses: 0 as number,
-};
+const initialState = initialTable
 
 type TableState = typeof initialState;
 type TableAction = LoadDataAction | ClearDataAction
@@ -36,19 +32,15 @@ const tableReducer = (state: TableState = initialState, action: TableAction): Ta
            const totalQuantity = data.reduce((sum, product) => sum + product.quantity, 0);
            const totalExpenses = +data.reduce((sum, product) => sum + product.expenses, 0).toFixed(2);
 
-            const newState = {
+            return {
                 ...state,
                 headers,
                 data,
                 totalQuantity,
                 totalExpenses
             };
-            localStorage.setItem('tableData', JSON.stringify(newState));
-
-            return newState;
         }
         case CLEAR_DATA:
-            localStorage.removeItem('tableData');
             return {
                 ...initialState
             };
