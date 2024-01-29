@@ -1,4 +1,4 @@
-import {Modal, ModalProps} from "../../ui/Modal";
+import {Modal, ModalProps} from "../../ui";
 import {Button} from "../../ui";
 
 import s from './DeleteDataModal.module.scss'
