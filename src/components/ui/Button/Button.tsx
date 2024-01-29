@@ -1,10 +1,8 @@
 import { ComponentPropsWithoutRef, ElementRef, forwardRef } from 'react';
-
-import s from './Button.module.scss';
-
+import s from './Button.module.scss'
 type DefaultButtonProps = ComponentPropsWithoutRef<'button'>;
 
-export type ButtonVariant = 'solid' | 'outline' | 'ghost';
+export type ButtonVariant = 'solid' | 'outline';
 
 export type ButtonProps = DefaultButtonProps & {
     fullWidth?: boolean;
