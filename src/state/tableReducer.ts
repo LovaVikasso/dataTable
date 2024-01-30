@@ -1,5 +1,5 @@
-import {TableWithHeaders} from "../common/types.ts";
-import {initialTable} from "../common/initialTable.ts";
+import {TableWithHeaders} from "@/common/types";
+import {initialTable} from "@/common/initialTable";
 
 export const LOAD_DATA = 'LOAD_DATA';
 export const CLEAR_DATA = 'CLEAR_DATA';
@@ -51,10 +51,7 @@ const tableReducer = (state: TableState = initialState, action: TableAction): Ta
             default:
                 return state;
         }
-    }
-;
-
-export default tableReducer;
+    };
 
 export const loadData = (tableWithHeaders: TableWithHeaders): LoadDataAction => ({
     type: LOAD_DATA,
@@ -64,3 +61,5 @@ export const loadData = (tableWithHeaders: TableWithHeaders): LoadDataAction => 
 export const clearData = (): ClearDataAction => ({
     type: CLEAR_DATA
 });
+
+export default tableReducer;

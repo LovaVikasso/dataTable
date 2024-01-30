@@ -1,5 +1,5 @@
 import * as XLSX from 'xlsx';
-import {ProductArray, TableWithHeaders} from "./types.ts";
+import {ProductArray, TableWithHeaders} from "./types";
 
 export const readFile = (file: File, onFileProcessed: (data: TableWithHeaders) => void) => {
     // Создание нового экземпляра FileReader для чтения содержимого файла

@@ -1,14 +1,14 @@
-import {Button, FileUploader} from "../ui";
+import {memo, useState} from "react";
+import {TableWithHeaders} from "@/common/types";
+import {Button, FileUploader} from "@/components/ui";
+import {DeleteDataModal} from "@/components/Modals";
 import s from './FileControls.module.scss'
-import {TableWithHeaders} from "../../common/types.ts";
-import {useState} from "react";
-import {DeleteDataModal} from "../Modals";
 
 type Props = {
     load: (data: TableWithHeaders) => void
     clear: () => void
 }
-export const FileControls = ({load, clear}: Props) => {
+export const FileControls = memo(({load, clear}: Props) => {
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
     const toggleModal = () => setIsModalOpen(!isModalOpen)
 
@@ -19,4 +19,4 @@ export const FileControls = ({load, clear}: Props) => {
             <DeleteDataModal deleteData={clear} isOpen={isModalOpen} toggleModal={toggleModal} />
         </div>
     )
-}
+})

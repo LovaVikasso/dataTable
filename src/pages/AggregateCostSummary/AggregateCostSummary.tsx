@@ -1,9 +1,12 @@
-import {clearData, loadData, selectedData, selectedHeaders, useAppDispatch, useAppSelector} from "../../state";
+import {useCallback, useMemo} from "react";
+import {clearData, loadData, selectedData, selectedHeaders, useAppDispatch, useAppSelector} from "@/state";
+import { Table } from "@/components/ui";
+import {FileControls} from "@/components/FileControls";
+import {formatNumber, formatQuantity} from "@/common/functions";
+import {aggregateData, isDataEmpty} from "@/common/tableFunctions";
+import {TableWithHeaders} from "@/common/types";
 import s from './AggregateCostSummary.module.scss'
-import {Table} from "../../components/ui";
-import {Product, TableWithHeaders} from "../../common/types.ts";
-import {FileControls} from "../../components/FileControls";
-import {formatNumber, formatQuantity} from "../../common/functions.ts";
+
 
 export const AggregateCostSummary = () => {
     const dispatch = useAppDispatch()
@@ -11,69 +14,35 @@ export const AggregateCostSummary = () => {
     const headers = useAppSelector(selectedHeaders)
     const data = useAppSelector(selectedData)
 
-    const handleFileUpload = (uploadedData: TableWithHeaders) => {
+    const handleFileUpload = useCallback((uploadedData: TableWithHeaders) => {
         dispatch(loadData(uploadedData));
-    };
-    const handleClearData = () => dispatch(clearData())
+    }, [dispatch]);
 
-    //проверка на то чтобы таблица не была пустая, даже если есть названия столбцов
-    const isDataEmpty = !data || data.length === 0 || data.every(item => item.quantity === 0 && item.price === 0);
+    const handleClearData = useCallback(() => {
+        dispatch(clearData());
+    }, [dispatch]);
 
+    const isEmpty = useMemo(() => isDataEmpty(data), [data]);
 
-    const aggregateData = (data: Product[]) => {
-        const aggregation: Record<string, {
-            internationalName: string;
-            tradeNames: Set<string>;
-            releaseForms: Set<string>;
-            totalQuantity: number;
-            totalPrice: number;
-            totalExpenses: number
-        }> = {};
+    const aggregatedData = useMemo(() => aggregateData(data), [data]);
 
-        data.forEach(item => {
-            const {internationalName, tradeName, releaseForm, quantity, price} = item;
+    const [totalOverallQuantity, totalExpenses] = useMemo(() => {
+        return aggregatedData.reduce(
+            ([totalQuantity, totalExp], item) => [totalQuantity + item.totalQuantity, totalExp + item.expenses],
+            [0, 0]
+        );
+    }, [aggregatedData]);
 
-            if (!aggregation[internationalName]) {
-                aggregation[internationalName] = {
-                    internationalName,
-                    tradeNames: new Set(),
-                    releaseForms: new Set(),
-                    totalQuantity: 0,
-                    totalPrice: 0,
-                    totalExpenses: 0
-                };
-            }
-
-            aggregation[internationalName].tradeNames.add(tradeName);
-            aggregation[internationalName].releaseForms.add(releaseForm);
-            aggregation[internationalName].totalQuantity += quantity;
-            aggregation[internationalName].totalExpenses += price * quantity;
-        });
-
-        return Object.values(aggregation).map(item => ({
-            internationalName: item.internationalName,
-            tradeNames: Array.from(item.tradeNames).join('\n'),
-            releaseForms: Array.from(item.releaseForms).join('\n'),
-            totalQuantity: item.totalQuantity,
-            averagePrice: item.totalQuantity > 0 ? +(item.totalExpenses / item.totalQuantity).toFixed(2) : 0,
-            expenses: item.totalExpenses
-        }));
-    };
-
-    const aggregatedData = aggregateData(data);
-
-    const totalOverallQuantity = aggregatedData.reduce((acc, item) => acc + item.totalQuantity, 0)
-    const totalExpenses = aggregatedData.reduce((sum, item) =>  sum + item.expenses, 0);
     return (
         <div className={s.container}>
             <h3>Агрегированная таблица затрат</h3>
-            {!isDataEmpty ? <Table.Root>
+            {!isEmpty ? <Table.Root>
                 <Table.Head>
                     <Table.Row>
                         {headers.map((header, index) => (
                             <Table.HeadData key={index}>{header}</Table.HeadData>
                         ))}
-                        {!isDataEmpty && <Table.HeadData>Затраты</Table.HeadData>}
+                        <Table.HeadData>Затраты</Table.HeadData>
                     </Table.Row>
                 </Table.Head>
                 <Table.Body>
@@ -86,7 +55,7 @@ export const AggregateCostSummary = () => {
                             averagePrice,
                             expenses
                         } = item;
-                        if (!item || !internationalName || !tradeNames) return null;
+                        if (!item || !internationalName) return null;
                         return (
                             <Table.Row key={index}>
                                 <Table.Data>{internationalName}</Table.Data>

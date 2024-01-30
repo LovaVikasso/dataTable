@@ -1,6 +1,6 @@
 import {combineReducers, legacy_createStore} from "redux";
 import {TypedUseSelectorHook, useDispatch, useSelector} from "react-redux";
-import tableReducer from "./tableReducer.ts";
+import tableReducer from "./tableReducer";
 
 const rootReducer = combineReducers({
     table: tableReducer,

@@ -1,4 +1,4 @@
-import {ComponentProps, FC} from 'react'
+import {ComponentProps, FC, memo} from 'react'
 import s from './Table.module.scss'
 
 //Везде будет одинаковая структура ComponentProps<'table tag'>,
@@ -10,7 +10,6 @@ export const Root: FC<ComponentProps<'table'>> = ({className, ...rest}) => {
     const classNames = {
         table: `${className ? `${className} ` : ''}${s.table}`,
     }
-
     return <table className={classNames.table} {...rest} /> //возвращаем сам тег таблицы, столизуем и отдаем остальные пропсы
 }
 export const Head: FC<ComponentProps<'thead'>> = props => {
@@ -22,26 +21,17 @@ export const HeadData: FC<ComponentProps<'th'>> = props => {
 export const Body: FC<ComponentProps<'tbody'>> = props => {
     return <tbody {...props} />
 }
-export const Row = ({className, ...rest}: ComponentProps<'tr'>) => {
-    const classNames = {
-        row: `${className ? `${className} ` : ''}${s.row}`,
-    } // в последем ряду будут разные стили,но базовые стили таблицы сохраняться
-    return <tr className={classNames.row} {...rest} />
-}
-export const Data = ({className, ...rest}: ComponentProps<'td'>) => {
-    const classNames = {
-        data: `${className ? `${className} ` : ''}${s.data}`,
-    } // в последем ряду будут разные стили,но базовые стили таблицы сохраняться
+export const Row = memo(({ className, ...rest }: ComponentProps<'tr'>) =>
+    <tr className={`${className || ''} ${s.row}`} {...rest} />);
 
-    return <td className={classNames.data} {...rest} />
-}
+export const Data = memo(({ className, ...rest }: ComponentProps<'td'>) =>
+    <td className={`${className || ''} ${s.data}`} {...rest} />);
 
 //нужен если в таблице нет данных
 export const Empty = ({className}: ComponentProps<'div'>) => {
     const classNames = {
         empty: `${className ? `${className} ` : ''}${s.empty}`,
     }
-
     return (
         <div className={classNames.empty}>
             <h4>Данных в таблице пока нет</h4>

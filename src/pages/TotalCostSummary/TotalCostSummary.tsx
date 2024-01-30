@@ -1,12 +1,20 @@
-import {Table} from "../../components/ui";
-
+import {useCallback, useMemo} from "react";
+import {Table} from "@/components/ui";
+import {FileControls} from "@/components/FileControls";
+import {
+    clearData,
+    useAppDispatch,
+    loadData,
+    useAppSelector,
+    selectedData,
+    selectedHeaders,
+    selectedTotalExpenses,
+    selectedTotalQuantity
+} from "@/state";
+import {TableWithHeaders} from "@/common/types";
+import {formatNumber, formatQuantity} from "@/common/functions";
+import {isDataEmpty} from "@/common/tableFunctions";
 import s from './TotalCostSummary.module.scss'
-import {clearData, useAppDispatch, useAppSelector} from "../../state";
-import {TableWithHeaders} from "../../common/types.ts";
-import {loadData} from "../../state";
-import {selectedData, selectedHeaders, selectedTotalExpenses, selectedTotalQuantity} from "../../state";
-import {FileControls} from "../../components/FileControls";
-import {formatNumber, formatQuantity} from "../../common/functions.ts";
 
 export const TotalCostSummary = () => {
 
@@ -17,31 +25,32 @@ export const TotalCostSummary = () => {
     const totalQuantity = useAppSelector(selectedTotalQuantity)
     const totalExpenses = useAppSelector(selectedTotalExpenses)
 
-    const handleFileUpload = (uploadedData: TableWithHeaders) => {
+    const handleFileUpload = useCallback((uploadedData: TableWithHeaders) => {
         dispatch(loadData(uploadedData));
-    };
-    const handleClearData = () => dispatch(clearData())
+    }, [dispatch]);
 
-    //проверка на то чтобы таблица не была пустая, даже если есть названия столбцов
-    const isDataEmpty = !data || data.length === 0 || data.every(item => item.quantity === 0 && item.price === 0);
+    const handleClearData = useCallback(() => {
+        dispatch(clearData());
+    }, [dispatch]);
+
+    const isEmpty = useMemo(() => isDataEmpty(data), [data]);
 
     return (
         <div className={s.container}>
             <h3>Сводная таблица затрат</h3>
 
-            {!isDataEmpty ? (
+            {!isEmpty ? (
                 <Table.Root>
                     <Table.Head>
                         <Table.Row>
                             {headers.map((header, index) => (
                                 <Table.HeadData key={index}>{header}</Table.HeadData>
                             ))}
-                            {!isDataEmpty && <Table.HeadData>Затраты</Table.HeadData>}
+                            <Table.HeadData>Затраты</Table.HeadData>
                         </Table.Row>
                     </Table.Head>
                     <Table.Body>
                         {data.map((item, index) => {
-                            if (!item || !item.internationalName || !item.tradeName) return null;
                             const {internationalName, tradeName, releaseForm, quantity, price, expenses} = item
                             if (!item || !internationalName || !tradeName) return null;
                             return (<Table.Row key={index}>
@@ -66,7 +75,7 @@ export const TotalCostSummary = () => {
             ) : (
                 <Table.Empty/>
             )}
-            <FileControls load={handleFileUpload} clear={handleClearData} />
+            <FileControls load={handleFileUpload} clear={handleClearData}/>
         </div>
     )
 }
