@@ -1,1 +1,1 @@
-export * from './PageNotFound.tsx'
+export * from './PageNotFound'

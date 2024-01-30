@@ -1,5 +1,5 @@
 import { ReactNode} from 'react';
-import {CloseButton} from "../../../assets/icon/close.tsx";
+import {CloseButton} from "@/assets/icon/close";
 import s from './Modal.module.scss'
 
 export type ModalProps = {

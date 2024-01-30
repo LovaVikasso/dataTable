@@ -1,5 +1,5 @@
 import { Meta } from '@storybook/react'
-import {Table} from "./Table.tsx";
+import {Table} from "./Table";
 
 export default {
     title: 'Components/Table',

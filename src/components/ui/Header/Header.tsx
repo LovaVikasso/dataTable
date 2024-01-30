@@ -1,6 +1,8 @@
-import {Button, ButtonVariant} from "../Button";
+
 import s from './Header.module.scss'
 import {NavLink, useLocation} from "react-router-dom";
+import {Button, ButtonVariant} from "@/components/ui";
+
 
 export const Header = () => {
     const location = useLocation();

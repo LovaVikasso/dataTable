@@ -1,1 +1,1 @@
-export * from './AggregateCostSummary.tsx'
+export * from './AggregateCostSummary'

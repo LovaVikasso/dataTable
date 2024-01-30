@@ -1,7 +1,7 @@
 import {ChangeEvent, useRef} from "react";
-import {TableWithHeaders} from "../../../common/types.ts";
-import {Button} from "../Button";
-import {readFile} from "../../../common/readFile.ts";
+import {TableWithHeaders} from "@/common/types";
+import {Button} from "@/components/ui";
+import {readFile} from "@/common/readFile";
 
 type Props = {
     onFileUploaded: (data: TableWithHeaders) => void
