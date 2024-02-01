@@ -1,4 +1,4 @@
-import {combineReducers, legacy_createStore} from "redux";
+import {combineReducers, legacy_createStore as createStore} from "redux";
 import {TypedUseSelectorHook, useDispatch, useSelector} from "react-redux";
 import tableReducer from "./tableReducer";
 
@@ -12,5 +12,5 @@ export type StateType = ReturnType<typeof store.getState>;
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector
 export const useAppDispatch = () => useDispatch<AppDispatchType>()
 
-export const store = legacy_createStore(rootReducer);
+export const store = createStore(rootReducer);
 

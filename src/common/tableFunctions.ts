@@ -17,7 +17,6 @@ export const aggregateData = (data: Product[]) => {
 
     data.forEach(item => {
         const {internationalName, tradeName, releaseForm, quantity, price} = item;
-
         if (!aggregation[internationalName]) {
             aggregation[internationalName] = {
                 internationalName,

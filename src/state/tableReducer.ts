@@ -1,5 +1,5 @@
-import {TableWithHeaders} from "@/common/types";
-import {initialTable} from "@/common/initialTable";
+import {Product, TableWithHeaders} from "@/common/types";
+// import {initialTable} from "@/common/initialTable";
 
 export const LOAD_DATA = 'LOAD_DATA';
 export const CLEAR_DATA = 'CLEAR_DATA';
@@ -11,13 +11,23 @@ type LoadDataAction = {
 type ClearDataAction = {
     type: typeof CLEAR_DATA;
 }
+type stateType = {
+    headers:string[],
+    data: Product[],
+    totalQuantity: number,
+    totalExpenses: number
+}
 
-const initialState = initialTable
+const initialState = {
+    headers: [] as string[],
+    data: [] as Product[],
+    totalQuantity: 0 as number,
+    totalExpenses: 0 as number
+}
 
-type TableState = typeof initialState;
 type TableAction = LoadDataAction | ClearDataAction
 
-const tableReducer = (state: TableState = initialState, action: TableAction): TableState => {
+const tableReducer = (state: stateType = initialState, action: TableAction): stateType => {
         switch (action.type) {
             case LOAD_DATA: {
                 const [headers, ...rows] = action.payload;
