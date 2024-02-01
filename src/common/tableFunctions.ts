@@ -6,6 +6,9 @@ export const isDataEmpty = (data: Product[]): boolean => {
 
 //агрегируем данные по internationalName
 export const aggregateData = (data: Product[]) => {
+    if (!Array.isArray(data)) {
+        throw new Error("Invalid input: data should be an array of products.");
+    }
     const aggregation: Record<string, {
         internationalName: string;
         tradeNames: Set<string>;
@@ -16,6 +19,10 @@ export const aggregateData = (data: Product[]) => {
     }> = {};
 
     data.forEach(item => {
+        if (typeof item !== 'object' || item === null) {
+            console.error("Invalid item in data array", item);
+            return
+        }
         const {internationalName, tradeName, releaseForm, quantity, price} = item;
         if (!aggregation[internationalName]) {
             aggregation[internationalName] = {
